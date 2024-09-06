@@ -1,5 +1,30 @@
 # Dev env setup
 
+## Terminal env (example for MacOS)
+
+- [Iterm2][Iterm2]
+
+- update zsh to the latest version
+
+```bash
+brew install zsh
+```
+
+- [Oh My Zsh][OhMyZsh]
+
+```bash
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+```
+
+- [zsh-autosuggestions][ZshAutosuggestions]
+
+```bash
+git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+
+# add to .zshrc
+plugins=(zsh-autosuggestions)
+```
+
 ## [Install Rust][InstallRust]
 
 ```bash
@@ -170,3 +195,9 @@ cargo install cargo-nextest --locked
 [GitCliff]: https://git-cliff.org/
 
 [CargoNextest]: https://github.com/nextest-rs/nextest
+
+[Iterm2]: https://iterm2.com/
+
+[OhMyZsh]: https://ohmyz.sh/#install
+
+[ZshAutosuggestions]: https://github.com/zsh-users/zsh-autosuggestions
