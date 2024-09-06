@@ -1,4 +1,7 @@
-[default.extend-words] # This section can be used to add custom words to the dictionary to prevent them from being flagged as spelling errors. 
+[default.extend-words] # This section can be used to add custom words to the dictionary to prevent them from being flagged as spelling errors.
+
+[default.extend-identifiers]
+Iterm2 = "Iterm2"
 
 [files]
 extend-exclude = ["CHANGELOG.md"]

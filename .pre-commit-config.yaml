@@ -37,7 +37,7 @@ repos:
       - id: typos # Typo checking
         name: typos
         description: check typo
-        entry: bash -c 'typos'
+        entry: bash -c 'typos -c _typos.toml'
         language: rust
         files: \.*$
         pass_filenames: false
