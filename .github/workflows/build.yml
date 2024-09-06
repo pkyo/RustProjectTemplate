@@ -1,0 +1,57 @@
+name: build
+
+on:
+  push:
+    branches:
+      - master
+    tags:
+      - v*
+  pull_request:
+    branches:
+      - master
+
+permissions:
+  contents: write # allowing the workflow to modify repository contents.
+
+jobs:
+  build-rust:
+    strategy:
+      matrix:
+        platform: [ubuntu-latest]
+    runs-on: ${{ matrix.platform }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          submodules: recursive
+      - name: Install Rust toolchain
+        run: rustup toolchain install stable --component llvm-tools-preview
+      - name: Install cargo-llvm-cov
+        uses: taiki-e/install-action@cargo-llvm-cov # GitHub Action for installing development tools (mainly from GitHub Releases).
+      - name: Install nextest
+        uses: taiki-e/install-action@nextest
+      - name: Set up Rust cache
+        uses: Swatinem/rust-cache@v2
+      - name: Check code format
+        run: cargo fmt -- --check
+      - name: Check package for errors
+        run: cargo check --all
+      - name: Lint Rust sources
+        run: cargo clippy --all-targets --all-features --tests --benches -- -D warnings
+      - name: Execute Rust tests
+        run: cargo nextest run --all-features
+      - name: Generate changelog
+        uses: orhun/git-cliff-action@v2
+        id: git-cliff
+        if: startsWith(github.ref, 'refs/tags/') # This step only runs if the trigger was a tag
+        with:
+          config: cliff.toml
+          args: -vv --latest --strip header
+        env:
+          OUTPUT: CHANGELOG.md
+      - name: Create a release
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/') # This step only runs if the trigger was a tag
+        with:
+          body: ${{ steps.git-cliff.outputs.content }}

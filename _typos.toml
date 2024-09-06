@@ -1,0 +1,4 @@
+[default.extend-words] # This section can be used to add custom words to the dictionary to prevent them from being flagged as spelling errors. 
+
+[files]
+extend-exclude = ["CHANGELOG.md"]
