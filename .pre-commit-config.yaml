@@ -26,14 +26,14 @@ repos:
         entry: bash -c 'cargo fmt -- --check'
         language: rust
         files: \.rs$
-        args: []
+        args: [ ]
       - id: cargo-deny # Dependency checking
         name: cargo deny check
         description: check cargo dependencies
         entry: bash -c 'cargo deny check -d'
         language: rust
         files: \.rs$
-        args: []
+        args: [ ]
       - id: typos # Typo checking
         name: typos
         description: check typo
